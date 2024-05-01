@@ -107,8 +107,29 @@ class Admin extends BaseController
                 'status' => 'Antrian',
             ];
 
-            $this->model->insert($data);
-            return redirect()->to('/pengguna/dashboard');
+            $now = Time::now('Asia/Jakarta')->getHour();
+            $results = $this->antrianmodel->like('jam_antrian', '10')->findAll();
+            $test = end($results);
+            $result = $this->antrianmodel->where('jam_antrian', esc($this->request->getVar('jam')))->first();
+            if ($test['id'] <= $result['id'] && $data['nomor'] <= $result['maksimal']) {
+                $this->model->insert($data);
+                return redirect()->to('/pengguna/dashboard');
+
+            } else {
+                if ($data['nomor'] >= $result['maksimal']) {
+                    session()->setFlashdata('error', 'Nomor Antrian telah melewati batas maksimal');
+                    return redirect()->to('/pengguna/antrian-form');
+
+                } else {
+                    session()->setFlashdata('error', 'Nomor Antrian telah melewati jam sekarang');
+                    return redirect()->to('/pengguna/antrian-form');
+
+                }
+
+                // session()->setFlashdata('error', 'Nomor Antrian telah melewati jam sekarang');
+                // return redirect()->to('/pengguna/antrian-form');
+            }
+
         }
     }
 
@@ -193,6 +214,11 @@ class Admin extends BaseController
         ];
 
         return view('/admin/unduhrekapitulasi', $data);
+    }
+    public function updatejumlah()
+    {
+        $this->antrianmodel->update(esc($this->request->getVar('id')), ['maksimal' => esc($this->request->getVar('maksimal'))]);
+        return redirect()->to('/admin/antrian');
     }
 
 }

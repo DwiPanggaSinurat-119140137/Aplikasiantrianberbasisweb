@@ -183,6 +183,13 @@
                                 <h6 class="m-0 font-weight-bold text-primary">Antrian Tersedia</h6>
                                 <h6 class="m-0 font-weight-bold text-primary" id="dateInfo"></h6>
                             </div>
+                            <?php if (session('error')): ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?=session('error');?>
+                                <button type="button" class="close" data-dismiss="alert"
+                                    aria-label="Close"><span></button>
+                            </div>
+                            <?php endif;?>
                             <?php if (session()->has('errors')): ?>
                             <div class="alert alert-danger">
                                 <ul>
@@ -226,10 +233,10 @@
                                                     // Check if a valid number is found
                                                     if (numericPart) {
                                                         // Convert the string to a number
-                                                        const numericValue = parseInt(numericPart[0], 10);
+                                                        const numericValue = parseInt(numericPart[0],
+                                                            10);
 
-                                                        // Limit the numeric value to the range 0-15
-                                                        const limitedValue = Math.min(15, Math.max(0,
+                                                        const limitedValue = Math.min(100, Math.max(0,
                                                             numericValue));
 
                                                         const myInput = document.querySelector(
@@ -239,7 +246,7 @@
                                                         const resultTd = document.querySelector(
                                                             '.result-<?=$i;?>');
                                                         resultTd.textContent = limitedValue +
-                                                            "/15"; // Set content directly
+                                                            "/<?=$a['maksimal'];?>"; // Set content directly
                                                     } else {
                                                         console.error(
                                                             'No valid number found in the response');

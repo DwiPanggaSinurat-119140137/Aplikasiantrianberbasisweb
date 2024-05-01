@@ -9,7 +9,7 @@ class AntrianSttsModel extends Model
     protected $table = 'antrian_status';
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['jam_antrian', 'status', 'jumlah'];
+    protected $allowedFields = ['jam_antrian', 'status', 'jumlah', 'maksimal'];
     public function updateAllStatus($newStatus)
     {
         $data = [

@@ -10,22 +10,26 @@ class StatusAntrian extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type'           => 'INT',
-                'constraint'     => 5,
-                'unsigned'       => true,
+                'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => true,
                 'auto_increment' => true,
             ],
             'jam_antrian' => [
-                'type'       => 'VARCHAR',
-                'constraint'     => 255,
+                'type' => 'VARCHAR',
+                'constraint' => 255,
             ],
             'status' => [
-                'type'       => 'VARCHAR',
-                'constraint'     => 255,
+                'type' => 'VARCHAR',
+                'constraint' => 255,
             ],
             'jumlah' => [
-                'type'       => 'INT',
-                'constraint'     => 5,
+                'type' => 'INT',
+                'constraint' => 5,
+            ],
+            'maksimal' => [
+                'type' => 'INT',
+                'constraint' => 5,
             ],
         ]);
         $this->forge->addKey('id', true);
